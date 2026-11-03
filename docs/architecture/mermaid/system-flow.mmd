@@ -1,0 +1,25 @@
+sequenceDiagram
+    participant Student as طالب/معلم (Web/Mobile)
+    participant Ingress as Istio Gateway + RateLimit
+    participant API as API Route Handler (Next.js/TS)
+    participant Auth as Identity/Consent/RBAC + MFA
+    participant DB as PostgreSQL 16 + pgvector (RLS)
+    participant Outbox as Transactional Outbox
+    participant Kafka as Kafka Event Mesh
+    participant Worker as AI/Vision Worker
+    participant LLM as Authorized LLM/Vision Adapter
+    participant Audit as PII-Redacted Audit + OTel
+
+    Student->>Ingress: سؤال نصي أو صورة واجب (traceId, correlationId, schoolId)
+    Ingress->>API: تمرير الطلب عبر mTLS وفحص الحصص (Rate Limit)
+    API->>Auth: تحقق JWT/MFA/RBAC/موافقة ولي الأمر/حدود الاستخدام
+    API->>DB: تحقق حالة المحادثة وعزل المؤسسة (RLS school_id)
+    API->>Outbox: إنشاء حدث AIChatRequested أو VisionJobCreated ضمن المعاملة
+    Outbox-->>Kafka: نشر الحدث مع مفتاح عدم التكرار (idempotencyKey)
+    Kafka-->>Worker: تسليم الحدث للمعالج غير المتزامن
+    Worker->>DB: استرجاع موثق بفلاتر المدرسة/الصف/المادة/ترخيص الوزارة
+    Worker->>LLM: توليد محكوم بالسياق المعتمد مع حظر الحقن (Prompt Guard)
+    LLM-->>Worker: إجابة استرشادية + درجة الثقة + المصادر + بوابة مراجعة المعلم
+    Worker->>DB: حفظ الرسائل والتحليل والمصادر المشفرة (AES-256-GCM)
+    Worker->>Audit: تسجيل أثر التدقيق بعد تنقيح البيانات الشخصية (PII Redaction)
+    Worker-->>Student: بث النتيجة مع المصادر المعتمدة وتنبيه مراجعة المعلم عند الحاجة

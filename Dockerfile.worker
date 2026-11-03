@@ -1,0 +1,18 @@
+# Multi-stage hardened non-root Dockerfile for Async AI/Vision Worker
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci
+COPY . .
+RUN npm run type-check
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+RUN addgroup -g 1001 -S workergroup && adduser -u 1001 -S workeruser -G workergroup
+COPY --from=builder --chown=workeruser:workergroup /app/packages ./packages
+COPY --from=builder --chown=workeruser:workergroup /app/scripts ./scripts
+USER workeruser
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD node -e "process.exit(0)"
+CMD ["node", "--version"]

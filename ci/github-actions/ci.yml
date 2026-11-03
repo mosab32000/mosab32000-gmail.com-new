@@ -1,0 +1,32 @@
+name: CI Pipeline (Jordan Edu AI Platform)
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Setup Node.js 20 LTS
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
+        with:
+          node-version: "20"
+          cache: "npm"
+      - name: Deterministic Install
+        run: npm ci
+      - name: TypeScript Strict Check
+        run: npm run type-check
+      - name: ESLint Zero Warnings Gate
+        run: npm run lint
+      - name: Unit & Integration Tests
+        run: npm test
+      - name: Production Build Verification
+        run: npm run build

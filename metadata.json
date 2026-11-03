@@ -1,6 +1,6 @@
 {
-  "name": "Remix smart-learn-hub",
-  "description": "Imported from GitHub: mosab32000/smart-learn-hub",
+  "name": "منصة BETC التعليمية الذكية | التعلم الافتراضي المتقدم",
+  "description": "منصة تعليمية افتراضية ذكية متخصصة في مناهج BTEC تجمع بين الذكاء الاصطناعي والواقع الافتراضي و150+ أداة متكاملة",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

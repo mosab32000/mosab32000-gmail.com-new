@@ -1,0 +1,52 @@
+<mxfile host="app.diagrams.net" modified="2026-11-03T00:00:00.000Z" agent="Jordan-Edu-AI-Architect" version="24.0.0" type="device">
+  <diagram id="jordan-edu-ai-flow" name="Jordan Edu AI Platform System Flow (Data Residency First)">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="client" value="Client Layer (Arabic RTL Web &amp; Expo Mobile)&#xa;traceId · correlationId · schoolId" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#0369a1;fontColor=#ffffff;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="60" y="180" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gateway" value="Istio Ingress Gateway + Envoy Rate Limit&#xa;mTLS · WAF · Quota Enforcement" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#334155;fontColor=#f8fafc;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="340" y="180" width="230" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="api" value="TypeScript API Route Handlers&#xa;Auth · Minor Consent · RBAC/ABAC · Zod" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0369a1;strokeColor=#0284c7;fontColor=#ffffff;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="630" y="180" width="240" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="postgres" value="PostgreSQL 16 + pgvector (Jordan Residency)&#xa;Row-Level Security · Envelope AES-256-GCM · Outbox" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#065f46;strokeColor=#047857;fontColor=#ffffff;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="630" y="360" width="240" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka" value="Kafka Event Mesh&#xa;AIChatRequested · VisionJobCreated · AuditEvents" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4338ca;strokeColor=#3730a3;fontColor=#ffffff;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="940" y="180" width="240" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="worker" value="AI &amp; Vision Workers (Idempotent)&#xa;RAG Grounding · Ephemeral Vision · Teacher Gate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7c2d12;strokeColor=#9a3412;fontColor=#ffffff;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1250" y="180" width="240" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="observability" value="PII-Redacted Audit Sink + OpenTelemetry&#xa;Prometheus · Grafana SLOs · Vault KMS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#475569;fontColor=#38bdf8;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="940" y="375" width="550" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="client" target="gateway">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="gateway" target="api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="api" target="postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="api" target="kafka">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="kafka" target="worker">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="worker" target="postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="worker" target="observability">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -22,9 +22,10 @@ import { RubricAssessmentEngine } from "@/components/learning/RubricAssessmentEn
 import { BtecCurriculumExplorer } from "@/components/learning/BtecCurriculumExplorer";
 import { LearningAnalyticsView } from "@/components/learning/LearningAnalyticsView";
 import { ProductionReadinessCenter } from "@/components/learning/ProductionReadinessCenter";
+import { JordanEduPlatformSuite } from "@/components/learning/JordanEduPlatformSuite";
 
 export default function SmartLearningCenter() {
-  const [activeTab, setActiveTab] = useState<'sandbox' | 'tutor' | 'rubric' | 'curriculum' | 'analytics' | 'release-gate'>('sandbox');
+  const [activeTab, setActiveTab] = useState<'sandbox' | 'tutor' | 'jordan-suite' | 'rubric' | 'curriculum' | 'analytics' | 'release-gate'>('jordan-suite');
   const [activeRole, setActiveRole] = useState<'student' | 'teacher' | 'admin'>('student');
 
   return (
@@ -42,13 +43,21 @@ export default function SmartLearningCenter() {
                 مركز التعلم الذكي
               </span>
               <span className="text-[10px] text-slate-500 font-mono">
-                BTEC SMART LEARNING CENTER
+                BTEC & JORDAN EDU AI PLATFORM
               </span>
             </div>
           </Link>
 
           {/* Zone 2: Navigation Links */}
           <nav className="hidden md:flex items-center gap-6 text-xs font-medium text-slate-600 dark:text-slate-400">
+            <button
+              onClick={() => setActiveTab('jordan-suite')}
+              className={`hover:text-slate-900 dark:hover:text-white transition-colors whitespace-nowrap shrink-0 ${
+                activeTab === 'jordan-suite' ? 'text-sky-600 dark:text-sky-400 font-bold' : ''
+              }`}
+            >
+              منظومة التعليم الأردنية (v101)
+            </button>
             <button
               onClick={() => setActiveTab('sandbox')}
               className={`hover:text-slate-900 dark:hover:text-white transition-colors whitespace-nowrap shrink-0 ${
@@ -147,35 +156,47 @@ export default function SmartLearningCenter() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-2 max-w-2xl">
               <div className="flex items-center gap-2 text-xs font-mono text-sky-400">
-                <span>PEARSON BTEC INTERNATIONAL LEVEL 3</span>
+                <span>JORDAN DATA RESIDENCY FIRST</span>
                 <span aria-hidden="true">·</span>
-                <span>SYSTEMS ARCHITECTURE & ACCREDITATION</span>
+                <span>PEARSON BTEC LEVEL 3 & MOE STANDARDS</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
                 منظومة التعلم الذكي والمحاكاة التفاعلية
               </h1>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed text-wrap balance">
-                بيئة تدريب هندسية مؤسسية تجمع بين معامل المحاكاة العملية، ووكلاء الذكاء الاصطناعي السقراطي، ومحرك التقييم الفوري لمعايير الامتياز والجدارة.
+                بيئة تعليمية هندسية مؤسسية تجمع بين المعلم الذكي المجذّر بالمناهج المعتمدة، التحليل البصري التكويني للواجبات، الخزنة التشفيرية المغلفة، ومعامل المحاكاة.
               </p>
             </div>
 
             {/* Quick Metrics Badge Strip */}
             <div className="flex flex-wrap sm:flex-nowrap gap-3 shrink-0">
               <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-3 text-right min-w-[130px]">
-                <span className="text-[11px] text-slate-400 block">الوحدات النشطة</span>
-                <span className="text-lg font-bold font-mono text-sky-400 tabular-nums">3 تخصصية</span>
-                <span className="text-[10px] text-slate-500 block">300 Guided Hours</span>
+                <span className="text-[11px] text-slate-400 block">إقامة البيانات</span>
+                <span className="text-lg font-bold font-mono text-sky-400 tabular-nums">JO-AMMAN-1</span>
+                <span className="text-[10px] text-slate-500 block">AES-256-GCM + RLS</span>
               </div>
               <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-3 text-right min-w-[130px]">
-                <span className="text-[11px] text-slate-400 block">حالة المعمل</span>
-                <span className="text-lg font-bold font-mono text-emerald-400 tabular-nums">● ONLINE</span>
-                <span className="text-[10px] text-slate-500 block">Latency: 14ms</span>
+                <span className="text-[11px] text-slate-400 block">حوكمة التقييم</span>
+                <span className="text-lg font-bold font-mono text-emerald-400 tabular-nums">● VERIFIED</span>
+                <span className="text-[10px] text-slate-500 block">Teacher Gate Active</span>
               </div>
             </div>
           </div>
 
           {/* Clean Segmented Tab Switcher */}
           <div className="flex items-center gap-1.5 mt-6 pt-4 border-t border-slate-800 overflow-x-auto pb-1">
+            <button
+              onClick={() => setActiveTab('jordan-suite')}
+              className={`flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg transition-all whitespace-nowrap shrink-0 ${
+                activeTab === 'jordan-suite'
+                  ? 'bg-sky-600 text-white shadow-sm'
+                  : 'bg-slate-800/60 text-slate-300 hover:text-white hover:bg-slate-800'
+              }`}
+            >
+              <Sparkles className="h-4 w-4" />
+              <span>منظومة التعليم الأردنية (Jordan Edu AI v101)</span>
+            </button>
+
             <button
               onClick={() => setActiveTab('sandbox')}
               className={`flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg transition-all whitespace-nowrap shrink-0 ${
@@ -197,7 +218,7 @@ export default function SmartLearningCenter() {
               }`}
             >
               <BrainCircuit className="h-4 w-4" />
-              <span>المعلم الذكي متعدد الوكلاء (AI Tutor)</span>
+              <span>المعلم السقراطي (Socratic Tutor)</span>
             </button>
 
             <button
@@ -253,6 +274,7 @@ export default function SmartLearningCenter() {
 
       {/* Main Content Workspace */}
       <main className="container max-w-7xl mx-auto px-4 py-8 flex-1">
+        {activeTab === 'jordan-suite' && <JordanEduPlatformSuite />}
         {activeTab === 'sandbox' && <InteractiveSimulationLab />}
         {activeTab === 'tutor' && <MultiAgentTutorChat />}
         {activeTab === 'rubric' && <RubricAssessmentEngine />}

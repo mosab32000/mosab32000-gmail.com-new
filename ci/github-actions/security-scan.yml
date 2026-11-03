@@ -1,0 +1,29 @@
+name: Security Scan & Secret Audit
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Setup Node.js 20 LTS
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af
+        with:
+          node-version: "20"
+          cache: "npm"
+      - name: Install Dependencies
+        run: npm ci
+      - name: Dependency Vulnerability Audit
+        run: npm audit --audit-level=high
+      - name: Run RBAC, RLS & PII Redaction Tests
+        run: npx vitest run src/tests/tenancy-and-rbac.test.ts

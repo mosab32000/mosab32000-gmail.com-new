@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0.0",
+  "residencyRegion": "JO-AMMAN-1",
+  "copyrightedFullText": false,
+  "containsStudentPii": false,
+  "items": [
+    {
+      "id": "cit-jo-btec-u1-a1",
+      "standardCode": "JO-MOE-BTEC-L3-U1-A1",
+      "gradeLevel": "G11-BTEC",
+      "subjectCode": "IT-SYSTEMS",
+      "licenseType": "PEARSON_BTEC_AUTHORIZED_SYLLABUS",
+      "licenseVerified": true,
+      "titleAr": "الوحدة 1: أنظمة تكنولوجيا المعلومات — البنية المعمارية والمعالجات والخوادم"
+    },
+    {
+      "id": "cit-jo-btec-u6-b2",
+      "standardCode": "JO-MOE-BTEC-L3-U6-B2",
+      "gradeLevel": "G12-BTEC",
+      "subjectCode": "CYBER-SECURITY",
+      "licenseType": "PEARSON_BTEC_AUTHORIZED_SYLLABUS",
+      "licenseVerified": true,
+      "titleAr": "الوحدة 6: أمن الشبكات والتشفير التطبيقي وحماية البيانات"
+    }
+  ]
+}
