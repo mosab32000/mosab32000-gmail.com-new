@@ -1,0 +1,8 @@
+{
+  "name": "Remix smart-learn-hub",
+  "description": "Imported from GitHub: mosab32000/smart-learn-hub",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

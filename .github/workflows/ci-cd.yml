@@ -1,0 +1,42 @@
+name: Production Rehabilitation CI/CD Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify-and-build:
+    name: Deterministic Build, Lint, Type-Check, Test & Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js 20 LTS
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Deterministic Dependency Installation (No Fallback)
+        run: npm ci
+
+      - name: Security Vulnerability Gate (Blocking High/Critical)
+        run: npm audit --audit-level=high
+
+      - name: Strict TypeScript Type Check
+        run: npm run type-check
+
+      - name: Zero-Warning ESLint Gate
+        run: npm run lint
+
+      - name: Automated Unit, Tenancy, RBAC & BTEC Grading Tests
+        run: npm test
+
+      - name: Production Bundle Build Verification
+        run: npm run build
